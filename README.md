@@ -25,6 +25,6 @@ Kemudian add, commit dan push
 ```
 git add .
 git commit -m "Pesan"
-git push origin master
+git push origin main
 ```
 Setiap push orang lain harus pull terlebih dahulu sebelum bisa push karena bisa terjadi Conflict
