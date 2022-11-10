@@ -114,7 +114,11 @@ class SwarmMethod:
             pBest()
             updateV()
             updateX()
-            print(f"Iterasi-{i + 1} x1 = {self.vectorX[0][0, 0], self.vectorX[0][1, 0]}, x2 = {self.vectorX[1][0, 0], self.vectorX[1][1, 0]}, x3 = {self.vectorX[2][0, 0], self.vectorX[2][1, 0]}, x4 = {self.vectorX[3][0, 0], self.vectorX[3][1, 0]}")
+            print(f"===Iterasi-{i + 1}=======================================================")
+            print(f"gBest = {self.gBestX, self.gBestY}")
+            print(f"pBest = {self.pBestX, self.pBestY}")
+            print(f"v = {self.vX, self.vY}")
+            print(f"x1 = {self.vectorX[0][0, 0], self.vectorX[0][1, 0]}, x2 = {self.vectorX[1][0, 0], self.vectorX[1][1, 0]}, x3 = {self.vectorX[2][0, 0], self.vectorX[2][1, 0]}, x4 = {self.vectorX[3][0, 0], self.vectorX[3][1, 0]}")
 
 sm = SwarmMethod([1, 3, -2, 5], [-1, 0, 2, 5], [0], [0], [1, 0.5], [1, 1], 1)
 sm.swarm(3)

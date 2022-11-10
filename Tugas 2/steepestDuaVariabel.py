@@ -21,26 +21,15 @@ def funcG2DerivByX(x, y):
 def funcG2DerivByY(x, y):
     return -26 + 12*y**2 + 4*x
 
-def steepest(x, y, n):
-    def findLearningRate(xVector, gradientMatrix):
-        # nolCoretX = [xVector[0,0], "-", gradientMatrix[0,0], "t"]
-        # nolCoretY = [xVector[1,0], "-", gradientMatrix[1,0], "t"]
-
-        nolCoretX = lambda t : xVector[0,0] - gradientMatrix[0,0] * t
-        nolCoretY = lambda t : xVector[1,0] - gradientMatrix[1,0] * t
-
-        matGrad = np.matrix([[funcDerivByX(nolCoretX, nolCoretY)], [funcDerivByY(nolCoretX, nolCoretY)]])
-
-        return matGrad
-
-    print(f"x0 = ({x}, {y})")
-    for i in range(0, n):
+def steepest(x, y, t):
+    print(f"x0 = ({x}, {y}), f(x) = {func(x, y)}")
+    for i in range(0, len(t)):
         xVector = np.matrix([[x], [y]])
         gradientMatrix = np.matrix([[funcDerivByX(x, y)], [funcDerivByY(x, y)]])
-        xVectorNew = xVector - findLearningRate(xVector, gradientMatrix) * gradientMatrix
+        xVectorNew = xVector - t[i] * gradientMatrix
         x = xVectorNew[0, 0]
         y = xVectorNew[1, 0]
-        print(f"x{i + 1} = ({x}, {y})")
+        print(f"x{i + 1} = ({x}, {y}), f(x) = {func(x, y)}")
     print(f"Nilai Maximumnya adalah {func(x, y)}")
 
-steepest(5, 5, 3)
+steepest(5, 5, [1, 0.5, 0.5])
