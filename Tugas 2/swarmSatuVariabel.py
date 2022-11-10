@@ -1,7 +1,7 @@
-from numpy import *
+import numpy as np
 
 def func(x):
-    return (4 * log(x)) - x
+    return (4 * np.log(x)) - x
 
 def derivFunc(x):
     return (4/x) - 1
