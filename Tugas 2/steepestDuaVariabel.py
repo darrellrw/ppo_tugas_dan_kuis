@@ -30,6 +30,6 @@ def steepest(x, y, t):
         x = xVectorNew[0, 0]
         y = xVectorNew[1, 0]
         print(f"x{i + 1} = ({x}, {y}), f(x) = {func(x, y)}")
-    print(f"Nilai Maximumnya adalah {func(x, y)}")
+    print(f"Nilai Minimumnya adalah {func(x, y)}")
 
 steepest(5, 5, [1, 0.5, 0.5])

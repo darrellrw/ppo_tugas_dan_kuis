@@ -89,11 +89,11 @@ class SwarmMethod:
                         self.pBestY[i] = self.y[i]
                     else:
                         self.pBestY[i] = self.oldY[i]
-                    self.vectorPBest = np.matrix([[self.pBestX[i]], [self.pBestY[i]]])
+                    self.vectorPBest[i] = np.matrix([[self.pBestX[i]], [self.pBestY[i]]])
 
         def updateV():
             for i in range(len(self.vX)):
-                self.vectorV[i] = self.w * self.vectorV[i] + self.c[0] * self.r[0] * (self.vectorV[i] - self.vectorX[i]) + self.c[1] * self.r[1] * (self.vectorGBest - self.vectorX[i])
+                self.vectorV[i] = self.w * self.vectorV[i] + self.c[0] * self.r[0] * (self.vectorPBest[i] - self.vectorX[i]) + self.c[1] * self.r[1] * (self.vectorGBest - self.vectorX[i])
                 self.vX[i] = self.vectorV[i][0, 0]
                 self.vY[i] = self.vectorV[i][1, 0]
 
