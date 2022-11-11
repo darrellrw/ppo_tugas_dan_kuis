@@ -21,16 +21,23 @@ class SwarmMethod: #Kelas Metode PSO
             self.oldX.append(None)
     
     def swarm(self, n): #Method PSO
+        #Step 1 Menentukan x dan v
         def particle(x, v): #Method untuk menentukan partikel
             for i in range(len(x)):
                 self.x[i] = x[i]
             for i in range(len(v)):
                 self.v[i] = v[i]
+
+        #Step 2 Menentukan Nilai fungsi f(x)
         def mencariNilaiFungsi(): #Method untuk mencari nilai fungsi
             for i in range(len(self.f)):
                 self.f[i] = func(self.x[i])
+        
+        #Step 3 Menentukan gBest
         def gBest(): #Method untuk mencari gBest
             self.gBest = self.x[self.f.index(min(self.f))]
+
+        #Step 4 Menentukan pBest
         def pBest(): #Method untuk mencari pBest
             if(self.pBest[0] == None):
                 for i in range(len(self.x)):
@@ -41,9 +48,13 @@ class SwarmMethod: #Kelas Metode PSO
                         self.pBest[i] = self.x[i]
                     else:
                         self.pBest[i] = self.oldX[i]
+
+        #Step 5 Memperbarui v
         def updateV(): #Method untuk mengupdate nilai v
             for i in range(len(self.v)):
                 self.v[i] = self.w * self.v[i] + self.c[0] * self.r[0] * (self.pBest[i] - self.x[i]) + self.c[1] * self.r[1] * (self.gBest - self.x[i])
+        
+        #Step 6 Memperbarui x
         def updateX(): #Method untuk mengupdate nilai x
             for i in range(len(self.x)):
                 self.oldX[i] = self.x[i]
@@ -57,12 +68,27 @@ class SwarmMethod: #Kelas Metode PSO
             updateV()
             updateX()
             print(f"===Iterasi-{i + 1}=======================================================")
-            print(f"Sebelum: x0 = {self.oldX[0]}, x1 = {self.oldX[1]}, x2 = {self.oldX[2]}")
+            print("Sebelum:", end=" ")
+            for i in range(0, len(x)):
+                if(i == len(x) - 1):
+                    print(f"x{i} = {self.oldX[i]}", end="\n")
+                else:
+                    print(f"x{i} = {self.oldX[i]}", end=", ")
             print(f"gBest = {self.gBest}")
             print(f"pBest = {self.pBest}")
             print(f"v = {self.v}")
-            print(f"Sesudah: x0 = {self.x[0]}, x1 = {self.x[1]}, x2 = {self.x[2]}")
-            print(f"Nilai Fungsi: f(x0) = {self.f[0]}, f(x1) = {self.f[1]}, f(x2) = {self.f[2]}")
+            print("Sesudah:", end=" ")
+            for i in range(0, len(x)):
+                if(i == len(x) - 1):
+                    print(f"x{i} = {self.x[i]}", end="\n")
+                else:
+                    print(f"x{i} = {self.x[i]}", end=", ")
+            print("Nilai Fungsi:", end=" ")
+            for i in range(0, len(x)):
+                if(i == len(x) - 1):
+                    print(f"x{i} = {self.f[i]}", end="\n")
+                else:
+                    print(f"x{i} = {self.f[i]}", end=", ")
 
 x = np.random.randint(10, size=5)
 sm = SwarmMethod(x, 0, [0.5, 1], [0.5, 0.5], 1)

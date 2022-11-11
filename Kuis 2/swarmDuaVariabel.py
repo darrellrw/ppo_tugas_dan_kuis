@@ -7,36 +7,104 @@ class SwarmMethod:
     def __init__(self, x, y, v, c, r, w):
         self.x = x
         self.y = y
-        self.vX = [v, v, v]
-        self.vY = [v, v, v]
+        self.vX = []
+        self.vY = []
         self.c = c
         self.r = r
         self.w = w
-        self.f = [None, None, None]
+        self.f = []
         self.gBestX = None
         self.gBestY = None
-        self.pBestY = [None, None, None]
-        self.pBestX = [None, None, None]
-        self.oldX = [None, None, None]
-        self.oldY = [None, None, None]
-        self.vectorX = [None, None, None]
-        self.vectorV = [None, None, None]
-        self.vectorGBest = [None, None, None]
-        self.vectorPBest = [None, None, None]
+        self.pBestY = []
+        self.pBestX = []
+        self.oldX = []
+        self.oldY = []
+
+        for i in range(0, len(x)):
+            self.vX.append(v)
+            self.vY.append(v)
+            self.f.append(None)
+            self.pBestY.append(None)
+            self.pBestX.append(None)
+            self.oldX.append(None)
+            self.oldY.append(None)
+
     
     def swarm(self, n):
         def particle(x, y, vX, vY):
             for i in range(len(x)):
                 self.x[i] = x[i]
                 self.y[i] = y[i]
-                self.vectorX[i] = np.matrix([[x[i]], [y[i]]])
             for i in range(len(vX)):
                 self.vX[i] = vX[i]
                 self.vY[i] = vY[i]
-                self.vectorV[i] = np.matrix([[vX[i]], [vY[i]]])
+
+        def mencariNilaiFungsi():
+            for i in range(len(self.x)):
+                self.f[i] = func(self.x[i], self.y[i])
+
+        def gBest():
+            self.gBestX = self.x[self.f.index(min(self.f))]
+            self.gBestY = self.y[self.f.index(min(self.f))]
+
+        def pBest():
+            if(self.pBestX[0] == None):
+                for i in range(len(self.x)):
+                    self.pBestX[i] = self.x[i]
+                    self.pBestY[i] = self.y[i]
+            else:
+                for i in range(len(self.x)):
+                    if(func(self.oldX[i], self.oldY[i]) >= self.f[i]):
+                        self.pBestX[i] = self.x[i]
+                        self.pBestY[i] = self.y[i]
+                    else:
+                        self.pBestX[i] = self.oldX[i]
+                        self.pBestY[i] = self.oldY[i]
+
+        def updateV():
+            for i in range(len(self.vX)):
+                self.vX[i] = self.w * self.vX[i] + self.c[0] * self.r[0] * (self.pBestX[i] - self.x[i]) + self.c[1] * self.r[1] * (self.gBestX - self.x[i])
+                self.vY[i] = self.w * self.vY[i] + self.c[0] * self.r[0] * (self.pBestY[i] - self.y[i]) + self.c[1] * self.r[1] * (self.gBestY - self.y[i])
+
+        def updateX():
+            for i in range(len(self.oldX)):
+                self.oldX[i] = self.x[i]
+                self.oldY[i] = self.y[i]
+
+            for j in range(len(self.x)):
+                self.x[j] = self.x[j] + self.vX[j]
+                self.y[j] = self.y[j] + self.vY[j]
+        
 
         for i in range(0, n):
             particle(self.x, self.y, self.vX, self.vY)
+            mencariNilaiFungsi()
+            gBest()
+            pBest()
+            updateV()
+            updateX()
+            print(f"===Iterasi-{i + 1}=======================================================")
+            print("Sebelum:", end=" ")
+            for i in range(0, len(self.x)):
+                if(i == len(self.x) - 1):
+                    print(f"x{i} = {self.oldX[i], self.oldY[i]}", end="\n")
+                else:
+                    print(f"x{i} = {self.oldX[i], self.oldY[i]}", end=", ")
+            print(f"gBest = {self.gBestX, self.gBestY}")
+            print(f"pBest = {self.pBestX, self.gBestY}")
+            print(f"v = {self.vX, self.vY}")
+            print("Sesudah:", end=" ")
+            for i in range(0, len(self.x)):
+                if(i == len(self.x) - 1):
+                    print(f"x{i} = {self.x[i], self.y[i]}", end="\n")
+                else:
+                    print(f"x{i} = {self.x[i], self.y[i]}", end=", ")
+            print("Nilai Fungsi:", end=" ")
+            for i in range(0, len(self.x)):
+                if(i == len(self.x) - 1):
+                    print(f"x{i} = {self.f[i]}", end="\n")
+                else:
+                    print(f"x{i} = {self.f[i]}", end=", ")
 
 sm = SwarmMethod([0, 1, -1], [0, 1, -1], 0, [1, 0.5], [1, 1], 1)
 sm.swarm(3)
