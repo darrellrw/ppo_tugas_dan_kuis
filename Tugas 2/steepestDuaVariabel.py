@@ -32,4 +32,4 @@ def steepest(x, y, t):
         print(f"x{i + 1} = ({x}, {y}), f(x) = {func(x, y)}")
     print(f"Nilai Minimumnya adalah {func(x, y)}")
 
-steepest(5, 5, [1, 0.5, 0.5])
+steepest(5, 5, [0.0068, 0.0086, 0.00081])
