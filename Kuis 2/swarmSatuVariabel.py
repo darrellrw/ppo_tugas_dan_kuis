@@ -3,23 +3,22 @@ import numpy as np #Library Numpy
 def func(x): #Fungsi f(x) = ln(x**2 + 1)
     return np.log(x**2 + 1)
 
-def derivFunc(x): #Fungsi turunan pertama f(x)
-    return (2*x) / (x**2 + 1)
-
-def secondDerivFunc(x): #Fungsi turunan kedua f(x)
-    return (2 - 2*x**2) / (x**4 + 2*x**2 + 1)
-
 class SwarmMethod: #Kelas Metode PSO
     def __init__(self, x, v, c, r, w): #Inisisasi x0 v c r w
         self.x = x
-        self.v = [v, v, v]
+        self.v = []
         self.c = c
         self.r = r
         self.w = w
-        self.f = [None, None, None]
+        self.f = []
         self.gBest = None
-        self.pBest = [None, None, None]
-        self.oldX = [None, None, None]
+        self.pBest = []
+        self.oldX = []
+        for i in range(0, len(x)):
+            self.v.append(v)
+            self.f.append(None)
+            self.pBest.append(None)
+            self.oldX.append(None)
     
     def swarm(self, n): #Method PSO
         def particle(x, v): #Method untuk menentukan partikel
@@ -63,7 +62,8 @@ class SwarmMethod: #Kelas Metode PSO
             print(f"pBest = {self.pBest}")
             print(f"v = {self.v}")
             print(f"Sesudah: x0 = {self.x[0]}, x1 = {self.x[1]}, x2 = {self.x[2]}")
-            print(f"Nilai Fungsi: x0 = {self.f[0]}, x1 = {self.f[1]}, x2 = {self.f[2]}")
+            print(f"Nilai Fungsi: f(x0) = {self.f[0]}, f(x1) = {self.f[1]}, f(x2) = {self.f[2]}")
 
-sm = SwarmMethod([1, 0.5, -1], 0, [0.5, 1], [0.5, 0.5], 1)
+x = np.random.randint(10, size=5)
+sm = SwarmMethod(x, 0, [0.5, 1], [0.5, 0.5], 1)
 sm.swarm(3)

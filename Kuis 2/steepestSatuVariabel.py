@@ -6,9 +6,6 @@ def func(x): #Fungsi f(x) = ln(x**2 + 1)
 def derivFunc(x): #Fungsi turunan pertama f(x)
     return (2*x) / (x**2 + 1)
 
-def secondDerivFunc(x): #Fungsi turunan kedua f(x)
-    return (2 - 2*x**2) / (x**4 + 2*x**2 + 1)
-
 def steepest(x, n, t): #Method steepest decsent dengan parameter x0, iterasi dan learning rate
     print(f"x0 = {x}, f(x) = {func(x)}")
     for i in range(0, n): #Melakukan perulangan untuk mendapat nilai x
