@@ -18,7 +18,7 @@ def findLearningRate(x, y): #Method untuk memperbarui nilai learning rate (t)
     disambiguationFunction = xVector - t * gradientMatrix
     gradientTMatrix = np.matrix([[funcDerivByX(disambiguationFunction[0,0], disambiguationFunction[1,0])], [funcDerivByY(disambiguationFunction[0,0], disambiguationFunction[1,0])]]) 
 
-    disambiguation = (- gradientTMatrix[0,0]) * gradientMatrix[0,0] + (- gradientTMatrix[1,0]) * gradientMatrix[1,0]
+    disambiguation = (-1 * gradientTMatrix[0,0]) * gradientMatrix[0,0] + (-1 * gradientTMatrix[1,0]) * gradientMatrix[1,0]
 
     return float(sp.solveset(disambiguation, t).args[0])
 
