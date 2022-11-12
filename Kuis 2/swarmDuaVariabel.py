@@ -75,7 +75,7 @@ class SwarmMethod:
                 self.x[j] = self.x[j] + self.vX[j]
                 self.y[j] = self.y[j] + self.vY[j]
         
-
+        print("PSO Algoritm:")
         for i in range(0, n):
             particle(self.x, self.y, self.vX, self.vY)
             mencariNilaiFungsi()

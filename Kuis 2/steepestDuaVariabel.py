@@ -23,6 +23,7 @@ def findLearningRate(x, y): #Method untuk memperbarui nilai learning rate (t)
     return float(sp.solveset(disambiguation, t).args[0])
 
 def steepest(x, y, n, t): #Method Newton dengan parameter x0, y0, banyak iterasi dan learning rate
+    print("Metode Steepest Descent:")
     print(f"x0 = {x, y}, f(x0) = {func(x, y)}")
     for i in range(0, n):
         print(f"===Iterasi-{i + 1}=======================================================")

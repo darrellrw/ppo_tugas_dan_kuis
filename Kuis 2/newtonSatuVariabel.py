@@ -10,6 +10,7 @@ def secondDerivFunc(x): #Fungsi turunan kedua f(x)
     return (2 - 2*x**2) / (x**4 + 2*x**2 + 1)
 
 def newton(x, n): #Method Newton dengan parameter x0 dan banyak iterasi
+    print("Metode Newton:")
     print(f"x0 = {x}, f(x) = {func(x)}")
     for i in range(0, n): #Melakukan perulangan untuk mendapat nilai x
         print(f"===Iterasi-{i+1}===============================")

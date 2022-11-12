@@ -22,6 +22,7 @@ def funcG2DerivByY(x, y): #Turunan g2 terhadap y
     return 10
 
 def newton(x, y, n): #Method Newton dengan parameter x0, y0 dan banyak iterasi
+    print("Metode Newton:")
     print(f"x0 = {x, y}, f(x0) = {func(x, y)}")
     for i in range(0, n):
         print(f"===Iterasi-{i + 1}=======================================================")

@@ -61,6 +61,7 @@ class SwarmMethod: #Kelas Metode PSO
                 self.oldX[i] = self.x[i]
                 self.x[i] = self.x[i] + self.v[i]
 
+        print("PSO Algoritm:")
         for i in range(0, n): #Perulangan untuk mendapat nilai x
             particle(self.x, self.v)
             mencariNilaiFungsi()
