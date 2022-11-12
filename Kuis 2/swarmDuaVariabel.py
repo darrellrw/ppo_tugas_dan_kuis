@@ -106,5 +106,11 @@ class SwarmMethod:
                 else:
                     print(f"x{i} = {self.f[i]}", end=", ")
 
-sm = SwarmMethod([0, 1, -1], [0, 1, -1], 0, [1, 0.5], [1, 1], 1)
+x = np.random.randint(-10, 10, size=10)
+y = np.random.randint(-10, 10, size=10)
+r = np.random.rand(2)
+print(f"Nilai Random x: {x}")
+print(f"Nilai Random y: {y}")
+print(f"Nilai Random r: {r}")
+sm = SwarmMethod(x, y, 0, [1, 0.5], r, 1)
 sm.swarm(3)

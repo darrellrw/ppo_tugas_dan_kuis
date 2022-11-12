@@ -91,7 +91,7 @@ class SwarmMethod: #Kelas Metode PSO
                 else:
                     print(f"x{i} = {self.f[i]}", end=", ")
 
-x = np.random.randint(-10, 10, size=5)
+x = np.random.randint(-10, 10, size=10)
 r = np.random.rand(2)
 print(f"Nilai Random x: {x}")
 print(f"Nilai Random r: {r}")
