@@ -102,9 +102,9 @@ class SwarmMethod:
             print("Nilai Fungsi:", end=" ")
             for i in range(0, len(self.x)):
                 if(i == len(self.x) - 1):
-                    print(f"x{i} = {self.f[i]}", end="\n")
+                    print(f"f(x{i}) = {self.f[i]}", end="\n")
                 else:
-                    print(f"x{i} = {self.f[i]}", end=", ")
+                    print(f"f(x{i}) = {self.f[i]}", end=", ")
 
 x = np.random.randint(-10, 10, size=10)
 y = np.random.randint(-10, 10, size=10)
