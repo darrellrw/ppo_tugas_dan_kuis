@@ -10,7 +10,7 @@ def funcDerivByX(x, y): #Turunan f(x) terhadap x biasa disebut g1
 def funcDerivByY(x, y): #Turunan f(x) terhadap y biasa disebut g2
     return 8*x + 10*y - 38
 
-def findLearningRate(x, y):
+def findLearningRate(x, y): #Method untuk memperbarui nilai learning rate (t)
     t = sp.Symbol("t")
     
     xVector = np.matrix([[x], [y]])
