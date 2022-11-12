@@ -1,4 +1,5 @@
 import numpy as np #Library Numpy
+import random
 
 def func(x): #Fungsi f(x) = ln(x**2 + 1)
     return np.log(x**2 + 1)
@@ -90,6 +91,9 @@ class SwarmMethod: #Kelas Metode PSO
                 else:
                     print(f"x{i} = {self.f[i]}", end=", ")
 
-x = np.random.randint(10, size=5)
-sm = SwarmMethod(x, 0, [0.5, 1], [0.5, 0.5], 1)
+x = np.random.randint(-10, 10, size=5)
+r = np.random.rand(2)
+print(f"Nilai Random x: {x}")
+print(f"Nilai Random r: {r}")
+sm = SwarmMethod(x, 0, [0.5, 1], r, 1)
 sm.swarm(3)
