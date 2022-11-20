@@ -1,52 +1,102 @@
-import numpy as np
-import sympy as sp
+from tabulate import tabulate
 
-tab = []
+def z(x1, x2):
+    return 8 * x1 + 6 * x2
 
-def z():
-    return [8, 6]
+def fb1(x1, x2):
+    return 4 * x1 + 2 * x2 <= 60
 
-def slack():
-    return [[4, 2], [2, 4]]
+def fb2(x1, x2):
+    return 2 * x1 + 4 * x2 >= 48
 
-def b():
-    return [60, 48]
+class Simplex:
+    def __init__(self, z, slack, rhs):
+        self.tab = []
+        self.z = z
+        self.slack = slack
+        self.rhs = rhs
 
-def tableuFirst():
-    if(len(tab) == 0):
-        tab0 = []
-        tab0.append(1)
-        for j in range(len(z())):
-            tab0.append(-1 * z()[j])
-        for k in range(len(z())):
+        self.rk = 0
+        self.ck = 0
+
+        self.headers = ["z"]
+        for i in range(len(self.z)):
+            self.headers.append(f"x{i + 1}")
+        for j in range(len(self.z)):
+            self.headers.append(f"s{j + 1}")
+        self.headers.append("rhs")
+        self.headers.append("ratio")
+
+    def showTable(self):
+        print(tabulate(self.tab, self.headers, tablefmt="grid"))
+
+    def initTableu(self):
+        if(len(self.tab) == 0):
+            tab0 = []
+            tab0.append(1)
+            for j in range(len(self.z)):
+                tab0.append(-1 * self.z[j])
+            for k in range(len(self.z)):
+                tab0.append(0)
             tab0.append(0)
-        tab0.append(0)
-        tab.append(tab0)
-        # tab.append([1, -1 * z()[0], -1 * z()[1], 0, 0, 0])
-        for i in range(len(slack())):
-            tabx = []
-            # tab.append([0, slack()[i][0], slack()[i][1], 0, 0, b()[i]])
-            tabx.append(0)
-            for f in range(len(z())):
-                tabx.append(slack()[i][f])
-            for h in range(len(z())):
+            tab0.append(0)
+            self.tab.append(tab0)
+            for i in range(len(self.slack)):
+                tabx = []
                 tabx.append(0)
-            tabx.append(b()[i])
-            tab.append(tabx)
-            tab[i + 1][len(z())+ 1 + i] = 1
+                for f in range(len(self.z)):
+                    tabx.append(self.slack[i][f])
+                for h in range(len(self.z)):
+                    tabx.append(0)
+                tabx.append(self.rhs[i])
+                tabx.append(0)
+                self.tab.append(tabx)
+                self.tab[i + 1][len(self.z)+ 1 + i] = 1
 
-def coloumnKey():
-    xTab = []
-    for i in range(len(z())):
-        xTab.append(tab[0][i + 1])
-    return tab[0].index(min(xTab))
+        self.columnKey()
+        self.rowKey()
 
-def rowKey():
-    cTab = []
-    for i in range(len(slack())):
-        ratio = tab[i + 1][len(tab[0]) - 1] / tab[i + 1][coloumnKey()]
-        cTab.append(ratio)
-    return cTab.index(min(cTab)) + 1
+    def columnKey(self):
+        xTab = []
+        columnK = 0
+        for ma in self.tab:
+            xTab.append(min(ma))
+        for i in range(len(self.tab)):
+            if(min(xTab) in self.tab[i]):
+                columnK = self.tab[i].index(min(xTab))
+        self.ck = columnK
 
-tableuFirst()
-print(tab)
+    def rowKey(self):
+        cTab = []
+        for i in range(len(self.slack)):
+            ratio = self.tab[i + 1][-2] / self.tab[i + 1][self.ck]
+            self.tab[i + 1][-1] = ratio
+            cTab.append(ratio)
+        self.rk = cTab.index(min(cTab)) + 1
+
+    def obd(self):
+        pivot = self.tab[self.ck][self.rk]
+        for i in range(len(self.tab[self.ck]) - 1):
+            self.tab[self.ck][i] = self.tab[self.ck][i] / pivot
+
+        for j in range(len(self.tab) - 1):
+            oper = self.tab[self.ck - j - 1][self.rk]
+            for k in range(len(self.tab[self.ck]) - 1):
+                self.tab[self.ck - j - 1][k] = self.tab[self.ck - j - 1][k] - (oper * self.tab[self.ck][k])
+
+        self.columnKey()
+        self.rowKey()
+
+pp = Simplex([8,6], [[4, 2], [2, 4]], [60, 48])
+pp.initTableu()
+pp.showTable()
+
+print("")
+
+pp.obd()
+pp.showTable()
+
+print("")
+
+pp.obd()
+pp.showTable()
