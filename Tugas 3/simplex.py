@@ -58,11 +58,15 @@ class Simplex:
 
     def columnKey(self):
         xTab = []
+        mint = []
         columnK = 0
         for ma in self.tab:
-            xTab.append(min(ma))
+            mint.clear()
+            for mj in ma[:3]:
+                mint.append(mj)
+            xTab.append(min(mint))
         for i in range(len(self.tab)):
-            if(min(xTab) in self.tab[i]):
+            if(min(xTab) in self.tab[i][:3]):
                 columnK = self.tab[i].index(min(xTab))
         self.ck = columnK
 
@@ -83,24 +87,32 @@ class Simplex:
             oper = self.tab[self.ck - j - 1][self.rk]
             for k in range(len(self.tab[self.ck]) - 1):
                 self.tab[self.ck - j - 1][k] = self.tab[self.ck - j - 1][k] - (oper * self.tab[self.ck][k])
-
-        self.columnKey()
-        self.rowKey()
+        
+        try:
+            self.columnKey()
+            self.rowKey()
+        except:
+            None
 
     def run(self):
         self.initTableu()
         self.showTable()
         print("")
-        while(True):
-            try:
-                self.obd()
-            except:
-                break
-            self.showTable()
-            print("")
+
+        self.obd()
+        self.showTable()
+        print("")
+
+        self.obd()
+        self.showTable()
+        print("")
 
         print(f"Jadi, nilai x1 = {self.tab[1][-2]} dan x2 = {self.tab[2][-2]}.")
-        print(f"Maka nilai maksimum z adalah {z(self.tab[1][-2], self.tab[2][-2])}")
+        print(f"Maka nilai maksimum z adalah {self.tab[0][-2]}")
+        print("Pembuktian:")
+        print(f"    fb1({self.tab[1][-2]}, {self.tab[2][-2]}) = {fb1(self.tab[1][-2], self.tab[2][-2])}")
+        print(f"    fb2({self.tab[1][-2]}, {self.tab[2][-2]}) = {fb2(self.tab[1][-2], self.tab[2][-2])}")
+        print(f"    z({self.tab[1][-2]}, {self.tab[2][-2]}) = {z(self.tab[1][-2], self.tab[2][-2])}")
 
-pp = Simplex([8,6], [[4, 2], [2, 4]], [60, 48])
+pp = Simplex([8, 6], [[4, 2], [2, 4]], [60, 48])
 pp.run()
