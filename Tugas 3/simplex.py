@@ -87,16 +87,20 @@ class Simplex:
         self.columnKey()
         self.rowKey()
 
+    def run(self):
+        self.initTableu()
+        self.showTable()
+        print("")
+        while(True):
+            try:
+                self.obd()
+            except:
+                break
+            self.showTable()
+            print("")
+
+        print(f"Jadi, nilai x1 = {self.tab[1][-2]} dan x2 = {self.tab[2][-2]}.")
+        print(f"Maka nilai maksimum z adalah {z(self.tab[1][-2], self.tab[2][-2])}")
+
 pp = Simplex([8,6], [[4, 2], [2, 4]], [60, 48])
-pp.initTableu()
-pp.showTable()
-
-print("")
-
-pp.obd()
-pp.showTable()
-
-print("")
-
-pp.obd()
-pp.showTable()
+pp.run()
