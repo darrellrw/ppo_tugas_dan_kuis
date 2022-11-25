@@ -86,7 +86,7 @@ class Simplex: #Kelas Metode Simplex
     #Mengecek apakah nilai tidak negatif untuk kolom Z
     def check(self):
         for num in range(5):
-            if(self.tab[0][num] < 0):
+            if(self.tab[0][num + 1] < 0):
                 return False
         return True
 

@@ -67,6 +67,7 @@ class Dijkstra: #Kelas Metode Dijkstra
 
     #Menampilkan hasil jarak terkecil
     def result(self):
+        print("Metode Dijkstra\n")
         self.algorithm() #Menjalankan algoritma dijkstra
 
         path = []
@@ -75,7 +76,6 @@ class Dijkstra: #Kelas Metode Dijkstra
         while(node != self.start): #Jika node adalah bukan node dimulai
             path.append(node)
             node = self.previous[node]
-        
         path.append(self.start)
 
         print(f"Jarak terpendek ditemukan dengan jarak {self.shortest[self.end]}")
