@@ -2,7 +2,7 @@ from tabulate import tabulate
 
 class Dijkstra:
     def __init__(self, start, end):
-        self.node = ["A", "B", "C", "D", "E"]
+        self.nodes = ["A", "B", "C", "D", "E"]
 
         self.graph = {
             "A" : {"B" : 3},
@@ -12,49 +12,72 @@ class Dijkstra:
             "E" : {}
         }
 
-        self.distance = {}
-        self.point = {}
-
         self.start = start
         self.end = end
 
-        for point in self.graph:
-            self.distance[point] = 99
-            self.point[point] = {}
-        self.distance[self.start] = 0
+        self.unvisited = list(self.nodes)
+        self.shortest = {}
+        self.previous = {}
 
-        self.notVisited = [node for node in self.distance]
-    
-    def shortestRoute(self, distance, notVisited):
-        fartestPoint = 99
-        shortestPoint = ""
+        self.route = []
 
-        for self.point in distance:
-            if(self.point in notVisited and distance[self.point] <= fartestPoint):
-                fartestPoint = distance[self.point]
-                shortestPoint = self.point
+        self.headers = ["/"] + self.nodes
+
+    def showTable(self, nodes):
+        print(tabulate(nodes, self.headers, tablefmt="grid"))
+
+    def connection(self, node):
+        connections = []
+        for outNode in self.nodes:
+            if(self.graph[node].get(outNode, False) != False):
+                 connections.append(outNode)
+        return connections
+
+    def algorithm(self):
+        maxValue = 99
+        for node in self.unvisited:
+            self.shortest[node] = maxValue
+        self.shortest[self.start] = 0
+
+        while self.unvisited:
+            currentMin = None
+            for node in self.unvisited:
+                tempRoute = []
+                if(currentMin == None):
+                    currentMin = node
+
+                    tempRoute.append(node)
+                    for i in range(len(self.shortest)):
+                        tempRoute.append(self.shortest[self.nodes[i]])
+                    self.route.append(tempRoute)
+                    self.showTable(self.route)
+
+                elif(self.shortest[node] < self.shortest[currentMin]):
+                    currentMin = node
+
+            neighbors = self.connection(currentMin)
+            for next in neighbors:
+                temporary = self.shortest[currentMin] + self.graph[currentMin][next]
+                if(temporary < self.shortest[next]):
+                    self.shortest[next] = temporary
+                    self.previous[next] = currentMin
+
+            self.unvisited.remove(currentMin)
+
+    def result(self):
+        self.algorithm()
+
+        path = []
+        node = self.end
         
-        return shortestPoint
+        while(node != self.start):
+            path.append(node)
+            node = self.previous[node]
+        
+        path.append(self.start)
 
-    def shortest(self):
-        while self.notVisited:
-            kjkk = self.shortestRoute(self.distance, self.notVisited)
-            dist = self.distance[kjkk]
-            dd = self.graph[kjkk]
-            for test in dd:
-                print(kjkk)
-                print(test)
-                if(self.distance[test] > dist + dd[test]):
-                    self.distance[test] = dist + dd[test]
-                    self.point[test] = str(kjkk)
-            self.notVisited.pop(self.notVisited.index(kjkk))
-
-        route = [self.end]
-
-        i = 0
-        while(self.start not in route):
-            route.append(self.point[route[i]])
-            i += 1
+        print(f"Jarak terpendek ditemukan dengan jarak {self.shortest[self.end]}")
+        print(" -> ".join(reversed(path)))
 
 pp = Dijkstra("C", "E")
-pp.shortest()
+pp.result()
