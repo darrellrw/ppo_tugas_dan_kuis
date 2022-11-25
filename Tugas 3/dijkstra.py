@@ -26,7 +26,7 @@ class Dijkstra: #Kelas Metode Dijkstra
 
     #Menampilkan tabel
     def showTable(self, nodes):
-        print(tabulate(nodes, self.headers, tablefmt="grid"))
+        print(tabulate(nodes, self.headers, tablefmt="grid") + "\n")
 
     #Mencari koneksi antar node
     def connection(self, node):
