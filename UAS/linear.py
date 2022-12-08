@@ -14,7 +14,7 @@ def fb3(x1, x2):
     return 100 * x1 + 60 * x2 <= 3000
 
 def fb4(x1, x2):
-    return 20 * x1 + 25 * x2<= 1000
+    return 20 * x1 + 25 * x2 <= 1000
 
 class Simplex: #Kelas Metode Simplex
     #Inisiasi tabel
